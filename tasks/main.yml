@@ -20,10 +20,11 @@
   shell: git config --global user.email "{{git_user_email}}"
   when: git_user_email_result.stdout != "{{git_user_email}}"
 
-- name: install homebrew via the curl oneliner
-  shell: ruby -e "$(curl -fsSL https://raw.githubusercontent.com/Homebrew/install/master/install)"
+
+- name: install homebrew in ~/homebrew
+  shell: mkdir ~/homebrew && curl -L https://github.com/Homebrew/homebrew/tarball/master | tar xz --strip 1 -C ~/homebrew
   args:
-    creates: /usr/local/bin/brew
+    creates: ~/homebrew
 
 - name: update and upgrade homebrew
   homebrew: update_homebrew=yes upgrade_all=yes
